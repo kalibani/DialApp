@@ -7,6 +7,7 @@ import {
   Text,
   Dimensions,
   Image,
+  Platform,
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -33,7 +34,7 @@ import { DialPadItem } from '@/types';
 
 const { width } = Dimensions.get('window');
 
-const dialPadSize = width * 0.2;
+const dialPadSize = Platform.OS === 'ios' ? width * 0.165 : width * 0.2;
 const dialPadNumberSize = dialPadSize * 0.4;
 const dialPadTextSize = dialPadSize * 0.15;
 
@@ -122,14 +123,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.White,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingHorizontal: 20,
   },
   contactContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
-    marginTop: 10,
+    marginVertical: 10,
   },
   contactLeftContainer: {
     flexDirection: 'row',
@@ -150,7 +149,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderRadius: 10,
-    padding: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     width: '100%',
     backgroundColor: Colors.Lime,
   },
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: Colors.Green,
     fontFamily: 'WorkSans_500Medium',
-    cursor: 'pointer',
+    // cursor: 'pointer',
   },
   textMinutes: {
     marginBottom: 8,
