@@ -51,3 +51,35 @@ export type RootStackParamList = {
     name: string;
   };
 };
+
+export type DialPadIngoingProps = {
+  icon: ReactElement | string;
+  text: string;
+};
+
+export type IncomingDialPadProps = {
+  dialPadContent: DialPadIngoingProps[];
+  dialPadSize: number;
+  dialPadNumberSize: number;
+  navigation: navigation;
+};
+
+export type DialPadItemOutgoing = {
+  icon: ReactElement | string;
+  text: string;
+};
+export type DialPadOutgoingProps = {
+  dialPadContent: DialPadItemOutgoing[];
+  dialPadSize: number;
+  dialPadNumberSize: number;
+  setUseKeypad: Dispatch<SetStateAction<boolean>>;
+  navigation: navigation;
+};
+
+export type OutgoingDialPadKeypadProps = {
+  dialPadContent: DialPadItemOutgoing[];
+  dialPadSize: number;
+  dialPadNumberSize: number;
+  dialPadTextSize: number;
+  setUseKeypad: Dispatch<SetStateAction<boolean>>;
+};

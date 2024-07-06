@@ -13,6 +13,24 @@ export function MainHeader(): JSX.Element {
   );
 }
 
+export function HeaderIncoming(): JSX.Element {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.leftHeaderText}>Icoming call to</Text>
+      <Text style={styles.rightHeaderText}>+1-0259789065432</Text>
+    </View>
+  );
+}
+
+export function HeaderOutgoing(): JSX.Element {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.leftHeaderText}>Calling From</Text>
+      <Text style={styles.rightHeaderText}>+1-0259789065432</Text>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create<StyleType>({
   container: {
     width: width,

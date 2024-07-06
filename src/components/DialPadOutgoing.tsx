@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,37 +5,39 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+import React from 'react';
 
 import Colors from '@/constants/color.constant';
-import { DialPadKeyPadProps } from '@/types';
+import { DialPadOutgoingProps } from '@/types';
 
-const DialPadKeyPad = ({
-  code,
+const DialPadOutgoing = ({
   dialPadContent,
+  navigation,
   dialPadSize,
   dialPadNumberSize,
-  dialPadTextSize,
-  setCode,
-}: DialPadKeyPadProps) => {
+  setUseKeypad,
+}: DialPadOutgoingProps) => {
   return (
     <FlatList
       data={dialPadContent}
-      numColumns={3} // set number of columns
+      numColumns={3}
       keyExtractor={(_, index) => index.toString()}
       renderItem={({ item }) => {
         return (
           <TouchableOpacity
             onPress={() => {
-              if (code.length < 10) {
-                setCode(prev => [...prev, item]);
-              }
+              item.text === 'Hide' && setUseKeypad(false);
+              item.text === 'phone-hangup' && navigation.navigate('MainScreen');
             }}>
             <View
               style={[
                 {
                   backgroundColor:
-                    // @ts-ignore
-                    item === '' ? 'transparent' : Colors.LightGray,
+                    item.text === 'phone'
+                      ? Colors.Green
+                      : item.text === 'phone-hangup'
+                      ? Colors.Red
+                      : 'transparent',
                   width: dialPadSize,
                   height: dialPadSize,
                 },
@@ -48,13 +49,13 @@ const DialPadKeyPad = ({
                     { fontSize: dialPadNumberSize },
                     styles.dialPadNumber,
                   ]}>
-                  {item.number}
+                  {item.icon}
                 </Text>
-
-                <Text
-                  style={[{ fontSize: dialPadTextSize }, styles.dialPadText]}>
-                  {item.text}
-                </Text>
+                {item.text === 'Hide' && (
+                  <Text style={[{ fontSize: 16 }, styles.dialPadNumber]}>
+                    {item.text}
+                  </Text>
+                )}
               </View>
             </View>
           </TouchableOpacity>
@@ -64,10 +65,11 @@ const DialPadKeyPad = ({
   );
 };
 
-export default DialPadKeyPad;
+export default DialPadOutgoing;
 
 const styles = StyleSheet.create({
   dialPadContainer: {
+    alignContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 15,
@@ -84,6 +86,5 @@ const styles = StyleSheet.create({
   },
   dialPadText: {
     fontFamily: 'WorkSans_400Regular',
-    color: Colors.DarkGray,
   },
 });

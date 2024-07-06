@@ -6,7 +6,13 @@ import IconMaterialComunity from 'react-native-vector-icons/MaterialCommunityIco
 
 import Colors from '../constants/color.constant';
 import MainScreen from '../screens/MainScreen';
-import { MainHeader } from '@/components/NavigatorComponent';
+import {
+  MainHeader,
+  HeaderOutgoing,
+  HeaderIncoming,
+} from '@/components/NavigatorComponent';
+import OutgoingScreen from '@/screens/OutgoingScreen';
+import IncomingScreen from '@/screens/IncomingScreen';
 
 import { RootStackParamList } from '@/types';
 
@@ -104,6 +110,24 @@ export default function RootNavigator() {
         options={{
           headerTitle: MainHeader,
           headerShadowVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="IncomingScreen"
+        component={IncomingScreen}
+        options={{
+          headerTitle: HeaderIncoming,
+          headerShadowVisible: false,
+          headerBackVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="OutgoingScreen"
+        component={OutgoingScreen}
+        options={{
+          headerTitle: HeaderOutgoing,
+          headerShadowVisible: false,
+          headerBackVisible: false,
         }}
       />
     </Stack.Navigator>

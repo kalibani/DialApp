@@ -6,8 +6,14 @@ import { DialPadFormProps } from '@/types';
 
 const DialPadForm = ({ code }: DialPadFormProps) => {
   return (
-    <View style={styles.DialPadFormContainer}>
-      <Text style={styles.pinContent}>{code?.map(item => item.number)}</Text>
+    <View
+      style={[
+        styles.DialPadFormContainer,
+        { marginLeft: code.length === 10 ? 40 : 0 },
+      ]}>
+      <Text style={styles.pinContent}>
+        +1-{code.length > 0 && code?.map(item => item.number)}
+      </Text>
     </View>
   );
 };
@@ -17,12 +23,11 @@ export default DialPadForm;
 const styles = StyleSheet.create({
   DialPadFormContainer: {
     flexDirection: 'row',
-    marginBottom: 10,
     alignItems: 'flex-end',
   },
   pinContentContainer: {
     flex: 1,
-    backgroundColor: Colors.LightGray,
+    backgroundColor: Colors.Black,
     borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',

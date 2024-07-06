@@ -8,35 +8,36 @@ import {
 } from 'react-native';
 
 import Colors from '@/constants/color.constant';
-import { DialPadKeyPadProps } from '@/types';
 
-const DialPadKeyPad = ({
-  code,
+import { IncomingDialPadProps } from '@/types';
+
+const IncomingDialPad = ({
   dialPadContent,
+  navigation,
   dialPadSize,
   dialPadNumberSize,
-  dialPadTextSize,
-  setCode,
-}: DialPadKeyPadProps) => {
+}: IncomingDialPadProps) => {
   return (
     <FlatList
       data={dialPadContent}
-      numColumns={3} // set number of columns
+      numColumns={3}
       keyExtractor={(_, index) => index.toString()}
       renderItem={({ item }) => {
         return (
           <TouchableOpacity
             onPress={() => {
-              if (code.length < 10) {
-                setCode(prev => [...prev, item]);
-              }
+              item.text === 'phone-hangup' && navigation.navigate('MainScreen');
+              item.text === 'phone' && navigation.navigate('OutgoingScreen');
             }}>
             <View
               style={[
                 {
                   backgroundColor:
-                    // @ts-ignore
-                    item === '' ? 'transparent' : Colors.LightGray,
+                    item.text === 'phone'
+                      ? Colors.Green
+                      : item.text === 'phone-hangup'
+                      ? Colors.Red
+                      : 'transparent',
                   width: dialPadSize,
                   height: dialPadSize,
                 },
@@ -48,12 +49,7 @@ const DialPadKeyPad = ({
                     { fontSize: dialPadNumberSize },
                     styles.dialPadNumber,
                   ]}>
-                  {item.number}
-                </Text>
-
-                <Text
-                  style={[{ fontSize: dialPadTextSize }, styles.dialPadText]}>
-                  {item.text}
+                  {item.icon}
                 </Text>
               </View>
             </View>
@@ -64,10 +60,11 @@ const DialPadKeyPad = ({
   );
 };
 
-export default DialPadKeyPad;
+export default IncomingDialPad;
 
 const styles = StyleSheet.create({
   dialPadContainer: {
+    alignContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 15,
@@ -84,6 +81,5 @@ const styles = StyleSheet.create({
   },
   dialPadText: {
     fontFamily: 'WorkSans_400Regular',
-    color: Colors.DarkGray,
   },
 });
