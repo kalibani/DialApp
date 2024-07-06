@@ -8,16 +8,22 @@ import {
   Dimensions,
 } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 // components
 import DialPadForm from '@/components/DialPadForm';
 import DialPadKeyPad from '@/components/DialPadKeyPad';
+import DialPadContact from '@/components/DialPadContact';
 
 // Icons
 import { BackspaceIcon } from '@/assets/icons';
 
 // constant
 import Colors from '@/constants/color.constant';
-import { DialPadContent } from '@/constants/main.constant';
+import {
+  DialPadContent,
+  DialPadContactContent,
+} from '@/constants/main.constant';
 
 // types
 import { DialPadItem } from '@/types';
@@ -30,6 +36,7 @@ const dialPadTextSize = dialPadSize * 0.15;
 
 const MainScreen = () => {
   const [code, setCode] = useState<DialPadItem[]>([]);
+  const navigation = useNavigation();
   const { container, textContainer, addContactText } = styles;
 
   return (
@@ -53,6 +60,13 @@ const MainScreen = () => {
           dialPadSize={dialPadSize}
           dialPadNumberSize={dialPadNumberSize}
           dialPadTextSize={dialPadTextSize}
+        />
+        <DialPadContact
+          dialPadContent={DialPadContactContent}
+          dialPadSize={dialPadSize}
+          dialPadNumberSize={dialPadNumberSize}
+          dialPadTextSize={dialPadTextSize}
+          navigation={navigation}
         />
       </View>
     </SafeAreaView>
