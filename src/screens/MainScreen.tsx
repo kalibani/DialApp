@@ -1,18 +1,59 @@
-import React from 'react';
-import {SafeAreaView, View, StyleSheet, Text} from 'react-native';
+import React, { useState } from 'react';
+import {
+  SafeAreaView,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  Dimensions,
+} from 'react-native';
+
+// components
+import DialPadForm from '@/components/DialPadForm';
+import DialPadKeyPad from '@/components/DialPadKeyPad';
+
+// Icons
+import { BackspaceIcon } from '@/assets/icons';
 
 // constant
-import Colors from '../constants/color.constant';
+import Colors from '@/constants/color.constant';
+import { DialPadContent } from '@/constants/main.constant';
 
-type Props = {};
+// types
+import { DialPadItem } from '@/types';
 
-const MainScreen = ({}: Props) => {
-  const {container, textContainer, text} = styles;
+const { width } = Dimensions.get('window');
+
+const dialPadSize = width * 0.2;
+const dialPadNumberSize = dialPadSize * 0.4;
+const dialPadTextSize = dialPadSize * 0.15;
+
+const MainScreen = () => {
+  const [code, setCode] = useState<DialPadItem[]>([]);
+  const { container, textContainer, addContactText } = styles;
 
   return (
     <SafeAreaView style={container}>
       <View style={textContainer}>
-        <Text style={text}>Test</Text>
+        {code.length > 0 && (
+          <TouchableOpacity
+            onPress={() => setCode(prev => prev.slice(0, -1))}
+            style={{ position: 'absolute', top: 5, right: 25 }}>
+            {BackspaceIcon}
+          </TouchableOpacity>
+        )}
+        <DialPadForm code={code} />
+        <Text style={addContactText}>
+          {code.length > 0 ? 'add to contact' : ' '}
+        </Text>
+        <DialPadKeyPad
+          code={code}
+          dialPadContent={DialPadContent}
+          setCode={setCode}
+          dialPadSize={dialPadSize}
+          dialPadNumberSize={dialPadNumberSize}
+          dialPadTextSize={dialPadTextSize}
+        />
       </View>
     </SafeAreaView>
   );
@@ -31,9 +72,16 @@ const styles = StyleSheet.create({
     marginTop: 40,
     position: 'relative',
   },
-  text: {
-    color: Colors.Red,
+  backSpaceIcon: {
+    position: 'absolute',
+    top: 5,
+    right: 25,
+  },
+  addContactText: {
     fontSize: 16,
-    marginTop: 20,
+    fontWeight: '400',
+    color: Colors.Green,
+    fontFamily: 'WorkSans_500Medium',
+    marginBottom: 30,
   },
 });
